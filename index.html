@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Weather Dashboard</h1>
+      <p class="app-subtitle">Check the current weather for any city</p>
+    </header>
+
+    <main class="app-main">
+      <form class="search-bar" id="search-form">
+        <label for="city-input" class="sr-only">City name</label>
+        <input
+          type="text"
+          id="city-input"
+          class="city-input"
+          placeholder="Enter a city name..."
+          autocomplete="off"
+        />
+        <button type="submit" id="search-button" class="search-button">
+          Search
+        </button>
+      </form>
+
+      <div class="recent-searches" id="recent-searches" aria-label="Recent searches" hidden></div>
+
+      <section class="results" aria-live="polite">
+        <!--
+          States below are shown/hidden with the .is-active class,
+          driven by js/app.js based on the search request's state.
+        -->
+
+        <div class="state state--idle is-active" id="state-idle">
+          <p class="idle-icon" aria-hidden="true">&#128269;</p>
+          <p>Search for a city to see its current weather.</p>
+        </div>
+
+        <div class="state state--loading" id="state-loading">
+          <div class="spinner" aria-hidden="true"></div>
+          <p id="loading-message">Loading weather data...</p>
+        </div>
+
+        <div class="state state--error" id="state-error">
+          <p class="error-icon" aria-hidden="true">&#9888;</p>
+          <p class="error-message">City not found. Please try again.</p>
+        </div>
+
+        <div class="state state--result" id="state-result">
+          <div class="weather-card">
+            <div class="weather-card__icon" aria-hidden="true">--</div>
+            <div class="weather-card__top">
+              <h2 class="weather-card__city">City Name</h2>
+              <p class="weather-card__condition">Clear sky</p>
+            </div>
+            <div class="weather-card__temp">--&deg;C</div>
+            <div class="weather-card__details">
+              <div class="detail">
+                <span class="detail__label">Humidity</span>
+                <span class="detail__value">--%</span>
+              </div>
+              <div class="detail">
+                <span class="detail__label">Wind</span>
+                <span class="detail__value">-- km/h</span>
+              </div>
+              <div class="detail">
+                <span class="detail__label">Feels like</span>
+                <span class="detail__value">--&deg;C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>Weather data provided by Open-Meteo.</p>
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
