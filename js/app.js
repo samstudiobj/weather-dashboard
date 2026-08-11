@@ -33,6 +33,7 @@ const states = {
 // request's response land last and overwrite the newer one on screen.
 let isSearching = false;
 let lastWeatherData = null;
+let loadingCity = null;
 
 function showState(name) {
   Object.values(states).forEach((el) => el.classList.remove("is-active"));
@@ -40,6 +41,7 @@ function showState(name) {
 }
 
 function showLoading(city) {
+  loadingCity = city;
   loadingMessage.textContent = t("loading.text", { city });
   showState("loading");
 }
@@ -133,6 +135,9 @@ onLanguageChange(() => {
   renderRecentSearches();
   if (lastWeatherData && states.result.classList.contains("is-active")) {
     renderResult(lastWeatherData);
+  }
+  if (loadingCity && states.loading.classList.contains("is-active")) {
+    loadingMessage.textContent = t("loading.text", { city: loadingCity });
   }
 });
 
