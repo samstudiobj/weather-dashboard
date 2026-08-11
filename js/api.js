@@ -5,11 +5,10 @@
 // failure (network errors, bad responses, unexpected data) is normalized
 // here so no raw browser/network error text ever reaches the UI layer.
 
+import { t } from "./i18n.js";
+
 const GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search";
 const FORECAST_URL = "https://api.open-meteo.com/v1/forecast";
-
-const CONNECTION_ERROR_MESSAGE =
-  "Unable to connect. Please check your internet connection and try again.";
 
 // Marks the one failure that isn't a technical error — a valid search
 // that legitimately found no matching city. Its message should reach
@@ -24,7 +23,7 @@ export async function fetchWeatherByCity(city) {
     if (error instanceof NotFoundError) {
       throw error;
     }
-    throw new Error(CONNECTION_ERROR_MESSAGE);
+    throw new Error(t("error.connection"));
   }
 }
 
@@ -41,7 +40,7 @@ async function getWeatherData(city) {
   const place = geoData.results && geoData.results[0];
 
   if (!place) {
-    throw new NotFoundError(`Could not find a city named "${city}".`);
+    throw new NotFoundError(t("error.city_not_found", { city }));
   }
 
   const forecastResponse = await fetch(

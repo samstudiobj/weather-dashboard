@@ -9,26 +9,32 @@
 <body>
   <div class="app">
     <header class="app-header">
+      <button class="lang-toggle" type="button" data-i18n-aria-label="lang_toggle.aria_label" aria-label="Switch language / Changer de langue">
+        <span class="lang-toggle__option" data-lang-option="en">EN</span>
+        <span class="lang-toggle__divider">/</span>
+        <span class="lang-toggle__option" data-lang-option="fr">FR</span>
+      </button>
       <h1>Weather Dashboard</h1>
-      <p class="app-subtitle">Check the current weather for any city</p>
+      <p class="app-subtitle" data-i18n="header.subtitle">Check the current weather for any city</p>
     </header>
 
     <main class="app-main">
       <form class="search-bar" id="search-form">
-        <label for="city-input" class="sr-only">City name</label>
+        <label for="city-input" class="sr-only" data-i18n="search.city_label">City name</label>
         <input
           type="text"
           id="city-input"
           class="city-input"
           placeholder="Enter a city name..."
+          data-i18n-placeholder="search.placeholder"
           autocomplete="off"
         />
-        <button type="submit" id="search-button" class="search-button">
+        <button type="submit" id="search-button" class="search-button" data-i18n="search.button">
           Search
         </button>
       </form>
 
-      <div class="recent-searches" id="recent-searches" aria-label="Recent searches" hidden></div>
+      <div class="recent-searches" id="recent-searches" data-i18n-aria-label="recent.aria_label" aria-label="Recent searches" hidden></div>
 
       <section class="results" aria-live="polite">
         <!--
@@ -38,7 +44,7 @@
 
         <div class="state state--idle is-active" id="state-idle">
           <p class="idle-icon" aria-hidden="true">&#128269;</p>
-          <p>Search for a city to see its current weather.</p>
+          <p data-i18n="idle.text">Search for a city to see its current weather.</p>
         </div>
 
         <div class="state state--loading" id="state-loading">
@@ -61,15 +67,15 @@
             <div class="weather-card__temp">--&deg;C</div>
             <div class="weather-card__details">
               <div class="detail">
-                <span class="detail__label">Humidity</span>
+                <span class="detail__label" data-i18n="detail.humidity">Humidity</span>
                 <span class="detail__value">--%</span>
               </div>
               <div class="detail">
-                <span class="detail__label">Wind</span>
+                <span class="detail__label" data-i18n="detail.wind">Wind</span>
                 <span class="detail__value">-- km/h</span>
               </div>
               <div class="detail">
-                <span class="detail__label">Feels like</span>
+                <span class="detail__label" data-i18n="detail.feels_like">Feels like</span>
                 <span class="detail__value">--&deg;C</span>
               </div>
             </div>
@@ -79,7 +85,7 @@
     </main>
 
     <footer class="app-footer">
-      <p>Weather data provided by Open-Meteo.</p>
+      <p data-i18n="footer.text">Weather data provided by Open-Meteo.</p>
     </footer>
   </div>
 

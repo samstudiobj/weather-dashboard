@@ -4,29 +4,11 @@
 // so app.js never has to know how to round a number or map a weather
 // code to text.
 
-const WEATHER_CODE_TEXT = {
-  0: "Clear sky",
-  1: "Mainly clear",
-  2: "Partly cloudy",
-  3: "Overcast",
-  45: "Fog",
-  48: "Depositing rime fog",
-  51: "Light drizzle",
-  53: "Moderate drizzle",
-  55: "Dense drizzle",
-  61: "Slight rain",
-  63: "Moderate rain",
-  65: "Heavy rain",
-  71: "Slight snow",
-  73: "Moderate snow",
-  75: "Heavy snow",
-  80: "Rain showers",
-  81: "Moderate rain showers",
-  82: "Violent rain showers",
-  95: "Thunderstorm",
-  96: "Thunderstorm with hail",
-  99: "Thunderstorm with heavy hail",
-};
+import { t } from "./i18n.js";
+
+const WEATHER_CODES = [
+  0, 1, 2, 3, 45, 48, 51, 53, 55, 61, 63, 65, 71, 73, 75, 80, 81, 82, 95, 96, 99,
+];
 
 const WEATHER_CODE_ICON = {
   0: "☀️",
@@ -53,7 +35,7 @@ const WEATHER_CODE_ICON = {
 };
 
 function describeWeatherCode(code) {
-  return WEATHER_CODE_TEXT[code] || "Unknown conditions";
+  return WEATHER_CODES.includes(code) ? t(`weather.${code}`) : t("weather.unknown");
 }
 
 function iconForWeatherCode(code) {

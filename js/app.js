@@ -12,6 +12,7 @@ import {
   getRecentSearches,
   getLastSearchedCity,
 } from "./storage.js";
+import { t, onLanguageChange } from "./i18n.js";
 
 const form = document.getElementById("search-form");
 const cityInput = document.getElementById("city-input");
@@ -31,6 +32,7 @@ const states = {
 // a second chip before the first request resolves can let the earlier
 // request's response land last and overwrite the newer one on screen.
 let isSearching = false;
+let lastWeatherData = null;
 
 function showState(name) {
   Object.values(states).forEach((el) => el.classList.remove("is-active"));
@@ -38,7 +40,7 @@ function showState(name) {
 }
 
 function showLoading(city) {
-  loadingMessage.textContent = `Loading weather for "${city}"...`;
+  loadingMessage.textContent = t("loading.text", { city });
   showState("loading");
 }
 
@@ -48,6 +50,7 @@ function showError(message) {
 }
 
 function renderResult(rawData) {
+  lastWeatherData = rawData;
   const weather = formatWeatherForDisplay(rawData);
   const card = states.result;
 
@@ -78,7 +81,7 @@ function renderRecentSearches() {
 
   const label = document.createElement("span");
   label.className = "recent-searches__label";
-  label.textContent = "Recent:";
+  label.textContent = t("recent.label");
   recentSearchesEl.appendChild(label);
 
   recent.forEach((city) => {
@@ -94,7 +97,7 @@ function renderRecentSearches() {
 
 async function performSearch(city) {
   if (!city) {
-    showError("Please enter a city name.");
+    showError(t("error.empty_city"));
     return;
   }
 
@@ -110,7 +113,7 @@ async function performSearch(city) {
     renderResult(weather);
     addRecentSearch(weather.city);
   } catch (error) {
-    showError(error.message || "Something went wrong. Please try again.");
+    showError(error.message || t("error.generic"));
   } finally {
     isSearching = false;
     searchButton.disabled = false;
@@ -125,6 +128,13 @@ form.addEventListener("submit", (event) => {
 });
 
 renderRecentSearches();
+
+onLanguageChange(() => {
+  renderRecentSearches();
+  if (lastWeatherData && states.result.classList.contains("is-active")) {
+    renderResult(lastWeatherData);
+  }
+});
 
 const lastCity = getLastSearchedCity();
 if (lastCity) {
