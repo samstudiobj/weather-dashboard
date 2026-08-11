@@ -3,6 +3,7 @@
 A small vanilla JavaScript weather app: search a city, see its current
 weather. Built as a learning project — frontend only, no frameworks, no
 build step, no backend.
+LINK: https://weatherdashboard001v1.netlify.app/
 
 Weather data comes from [Open-Meteo](https://open-meteo.com/) (no API key
 required).
